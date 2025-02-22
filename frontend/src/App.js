@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import TodaysAgenda from './TodaysAgenda';
+import Deadlines from './Deadlines'; 
 import './App.css';
 
 function App() {
@@ -10,62 +11,61 @@ function App() {
   const [taskName, setTaskName] = useState('');
   const [taskHours, setTaskHours] = useState('');
   const [taskPriority, setTaskPriority] = useState('Medium');
-  const [taskTime, setTaskTime] = useState('None'); // Added state for task time
+  const [taskDate, setTaskDate] = useState(''); // <-- New state for date
+  const [taskTime, setTaskTime] = useState(''); // <-- New state for time
   const [tasks, setTasks] = useState([]);
 
-  // Add task function
   const addTask = () => {
-    if (taskName && taskHours) {
+    if (taskName && taskHours && taskDate && taskTime) {
+      const selectedDateTime = new Date(`${taskDate}T${taskTime}`); // Combine date & time
       const newTask = { 
         name: taskName, 
         hours: taskHours, 
         priority: taskPriority,
-        time: taskTime // Add the time slot information
+        start: selectedDateTime // <-- Use this for the calendar event
       };
       setTasks([...tasks, newTask]);
       setTaskName('');
       setTaskHours('');
       setTaskPriority('Medium');
-      setTaskTime('None'); // Reset time to "None"
-      setIsPopupOpen(false); // Close the popup
+      setTaskDate('');
+      setTaskTime('');
+      setIsPopupOpen(false);
     }
   };
 
   return (
     <Router>
       <div className="App">
-        {/* Sidebar with links */}
         <div className="sidebar">
           <h2>AI Planner</h2>
           <Link to="/" className="tab">My Calendar</Link>
           <Link to="/agenda" className="tab">Today's Agenda</Link>
-
-          {/* Add Task Button */}
+          <Link to="/deadlines" className="tab">Deadlines</Link>
           <button className="add-task-btn" onClick={() => setIsPopupOpen(true)}>
             Add Task
           </button>
         </div>
-        
-        {/* Main content area */}
+
         <div className="main-content">
           <Routes>
             <Route 
               path="/" 
-              element={
+              element={ 
                 <FullCalendar
                   plugins={[dayGridPlugin]}
                   events={tasks.map(task => ({
                     title: task.name,
-                    start: new Date(),  // For now, setting the task to today's date (adjust if needed)
-                    description: `Priority: ${task.priority}, Time: ${task.time}`,
+                    start: task.start, // Use correct task time
+                    description: `Priority: ${task.priority}`,
                   }))}
                 />
               } 
-            />  {/* Calendar page */}
-            <Route path="/agenda" element={<TodaysAgenda />} />  {/* Today's Agenda page */}
+            />
+            <Route path="/agenda" element={<TodaysAgenda />} />
+            <Route path="/deadlines" element={<Deadlines />} />
           </Routes>
 
-          {/* Popup for adding tasks */}
           {isPopupOpen && (
             <div className="popup">
               <div className="popup-content">
@@ -90,15 +90,16 @@ function App() {
                   <option value="Medium">Medium</option>
                   <option value="Low">Low</option>
                 </select>
-                <select
+                <input
+                  type="date"
+                  value={taskDate}
+                  onChange={(e) => setTaskDate(e.target.value)}
+                />
+                <input
+                  type="time"
                   value={taskTime}
                   onChange={(e) => setTaskTime(e.target.value)}
-                >
-                  <option value="None">None (AI to Handle)</option>
-                  <option value="Morning (9 AM - 12 PM)">Morning (9 AM - 12 PM)</option>
-                  <option value="Afternoon (12 PM - 5 PM)">Afternoon (12 PM - 5 PM)</option>
-                  <option value="Evening (5 PM - 9 PM)">Evening (5 PM - 9 PM)</option>
-                </select>
+                />
                 <button onClick={addTask}>Add Task</button>
                 <button onClick={() => setIsPopupOpen(false)}>Cancel</button>
               </div>
