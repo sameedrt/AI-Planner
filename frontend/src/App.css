@@ -1,328 +1,185 @@
-/* Basic layout for the page */
-.App {
-  display: flex;
-  height: 100vh; /* Full viewport height */
-}
-
-.sidebar {
-  width: 200px; /* Fixed width for sidebar */
-  height: 100vh;
-  background-color: #2d3748; /* Sidebar background */
-  color: white;
-  padding: 20px;
-  position: fixed; /* Sidebar stays fixed */
-  z-index: 10; /* Ensure it stays above the content */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
-}
-
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
+/* General Body Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #121212;  /* Dark background for the whole app */
+  color: #E0E0E0;  /* Light text color */
   margin: 0;
-  width: 100%; /* Ensure it takes full width */
-}
-
-/* Container for buttons */
-.button-container {
+  padding: 0;
   display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  gap: 15px; /* Space between the buttons */
-  margin-top: 30px; /* Optional: Add space from top */
-  width: 100%;
+  height: 100vh;
+  flex-direction: column;
 }
 
-/* Style for each button */
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.1rem;
-  display: block;
-  padding: 12px;
-  background-color: #34495e; /* Dark background for each button */
-  border-radius: 5px;
-  width: 100%; /* Make buttons fill the container */
-}
-
-.sidebar ul li a:hover {
-  color: #4a5568;
-  background-color: #1abc9c;
-}
-
-.sidebar ul li a.active {
-  background-color: #1abc9c; /* Active button highlight */
-}
-
-/* Tabs in sidebar */
-.tab {
-  padding: 10px;
-  margin: 5px 0;
-  background-color: #34495e; /* Darker background for tabs */
-  border-radius: 5px;
-  cursor: pointer;
-  color: #ecf0f1; /* Light text color */
-}
-
-.tab:hover {
-  background-color: #1abc9c; /* Hover effect with a teal color */
-}
-
-/* Main content area for calendar */
-.main-content {
-  margin-left: 200px; /* Adjusted to match sidebar width */
+/* Sidebar Styles */
+/* Sidebar Styles */
+.sidebar {
+  width: 210px; /* Sidebar width */
+  background-color: #1F1F1F;
+  padding: 20px;
+  position: fixed;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-color: #34495e; /* Dark background for content */
-  padding: 20px;
-  overflow-y: auto;
-  height: 100vh; /* Full height */
-  width: calc(100% - 200px); /* Ensure the content takes the remaining width */
+  justify-content: flex-start; /* Push content to the top */
+  z-index: 2; /* Ensure sidebar content appears above other content */
 }
 
-/* FullCalendar styling */
+/* Styling for the Add Task button */
+.sidebar .add-task-btn {
+  background-color: #1E90FF;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: auto; /* Keeps the button at the bottom */
+  margin-bottom: 30px; /* Adds space from the bottom */
+  z-index: 3; /* Ensure button is above other content */
+  position: relative; /* Ensure it stays within the sidebar */
+}
+
+.sidebar .add-task-btn:hover {
+  background-color: #007BFF;
+}
+
+.sidebar .tab {
+  color: #B0B0B0;
+  font-size: 16px;
+  margin: 10px 0;
+  text-decoration: none;
+}
+
+.sidebar .tab:hover {
+  color: #1E90FF;
+}
+
+.sidebar .add-task-btn:hover {
+  background-color: #007BFF;  /* Darker blue for hover */
+}
+
+/* Main Content Styles */
+.main-content {
+  margin-left: 240px; /* Space for the sidebar */
+  padding: 20px;  /* Adjusted padding for the main content */
+  overflow-y: auto;
+  flex-grow: 1;
+  background-color: #121212;  /* Ensure the background stays consistent */
+}
+
+/* Calendar Styling */
 .fc {
-  width: 100%; /* Full width */
-  max-width: 1200px; /* Max width for the calendar */
-  background-color: #2c3e50; /* Dark background for calendar */
+  margin-top: 20px; /* Space from the top */
   border-radius: 10px;
-  height: 60%; /* Limit calendar height to 60% of viewport height */
-  max-height: 60vh; /* Ensure it doesn't exceed 60% of the viewport */
+  font-size: 14px;  /* Reduced font size for calendar */
+  height: 620px;  /* Slightly taller height for the calendar */
+  margin-left: 10px; /* Adjusted to prevent overlap with sidebar */
+}
+
+.fc-daygrid-day {
+  background-color: #1F1F1F;
+  border-radius: 5px;
+  color: #B0B0B0;
+}
+
+.fc-daygrid-day:hover {
+  background-color: #007BFF;
 }
 
 .fc-daygrid-day-number {
-  color: white !important;
-}
-
-/* Make calendar title (month name) white */
-.fc-toolbar-title {
-  color: white !important;
-}
-
-/* TodaysAgenda styles */
-.todays-agenda {
-  padding: 20px;
-  color: #ecf0f1; /* Light text color */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; /* Center the content horizontally */
-  height: 100%; /* Ensure it fills the height */
-  margin-top: 50px; /* Adjust for some breathing space at the top */
-}
-
-.task-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px; /* Increased gap between tasks */
-  max-height: 600px; /* Set a max height to avoid taking too much space vertically */
-  overflow-y: auto; /* Enables scrolling if the list overflows */
-  background-color: #34495e; /* Dark background for the task list */
-  border-radius: 8px;
-  padding: 20px; /* Add padding to ensure tasks don’t stick to the edges */
-  width: 80%; /* Adjust width for better appearance */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-}
-
-.task {
-  background-color: #ecf0f1; /* Light background for individual tasks */
-  color: #2c3e50; /* Dark text color for task description */
-  padding: 20px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #bdc3c7; /* Light border for a soft separation */
-  transition: transform 0.2s ease-in-out;
-}
-
-.task-time {
-  font-weight: bold;
-  color: #1abc9c; /* Teal color for time */
-}
-
-.task-title {
-  font-size: 1.2em;
-}
-
-.task:hover {
-  transform: scale(1.05);
-  background-color: #ecf0f1; /* Light gray background on hover */
-}
-
-/* Current task styling */
-.task.current {
-  background-color: #1abc9c; /* Teal for current task */
-  color: white;
-  font-size: 1.5em;  /* Larger font for current task */
-  padding: 22px;
-}
-
-/* Add Task Button */
-.add-task-btn {
-  background-color: #1abc9c; /* Teal background */
-  color: white;
-  border: none;
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  position: fixed; /* Ensure it's fixed at the bottom */
-  bottom: 20px; /* Distance from the bottom */
-  left: 0;
-  width: 250px; /* Match sidebar width */
-  z-index: 10; /* Stay above content */
-}
-
-.add-task-btn:hover {
-  background-color: #16a085; /* Hover effect */
-}
-
-/* Popup for adding tasks */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Ensure it's above other elements */
-  overflow: auto; /* Ensure no clipping */
-}
-
-.popup-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 1001; /* Ensure the popup content stays on top of the overlay */
-}
-
-.popup-content input,
-.popup-content select {
-  margin: 10px 0;
-  padding: 8px;
-  width: 100%;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-}
-
-.popup-content button {
-  margin-top: 10px;
-  background-color: #1abc9c; /* Teal background */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.popup-content button:hover {
-  background-color: #16a085; /* Hover effect */
-}
-
-/* Apply a background color and spacing to the whole board */
-.flex {
-  display: flex;
-  gap: 16px;
-  padding: 16px;
-  background-color: #1e293b; /* Dark background for the whole page */
-}
-
-.kanban-column {
-  width: 33.33%;
-  background-color: #2d3748; /* Darker background for columns */
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Soft shadow for separation */
-}
-
-.text-white {
-  color: #fff;
-}
-
-.text-lg {
-  font-size: 1.25rem; /* Larger font for category title */
-}
-
-.font-bold {
+  color: #1E90FF;
   font-weight: bold;
 }
 
-.mb-4 {
-  margin-bottom: 16px;
-}
-
-.mb-2 {
-  margin-bottom: 12px;
-}
-
-.bg-gray-700 {
-  background-color: #374151; /* Slightly lighter than column background */
-  border-radius: 8px;
-}
-
-.p-4 {
-  padding: 16px;
-}
-
-.font-semibold {
+.fc-daygrid-day-top {
+  font-size: 13px;
   font-weight: 600;
 }
 
-.text-sm {
-  font-size: 0.875rem;
-  color: #d1d5db; /* Light gray text for due date */
-}
-
-.card:hover {
-  background-color: #4a5568; /* Slightly lighter shade for hover effect */
-  cursor: pointer;
-}
-
-/* Deadlines Page Styling */
+/* Deadlines Page Styles */
 .deadlines-container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
 }
 
 .deadlines-column {
-  width: 33%;
-  background-color: #2c2c2c;
+  width: 30%;
+  background-color: #2A2A2A;
   border-radius: 10px;
   padding: 20px;
+  margin-bottom: 30px;
+  flex-grow: 1;
 }
 
 .deadlines-column h2 {
-  color: white;
-  font-size: 1.25rem;
-  margin-bottom: 20px;
-  text-align: center;
+  color: #1E90FF;
 }
 
 .deadline-card {
-  background-color: #333;
-  color: white;
-  margin-bottom: 15px;
+  background-color: #444;
   padding: 15px;
-  border-radius: 8px;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .deadline-card h3 {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 5px;
+  color: #fff;
+  font-size: 16px;
 }
 
 .deadline-card p {
-  font-size: 0.9rem;
+  color: #B0B0B0;
+  font-size: 14px;
+}
+
+/* Popup Styles */
+.popup {
+  position: fixed; /* Ensures the popup stays on top of everything */
+  top: 50%; /* Centers it vertically */
+  left: 50%; /* Centers it horizontally */
+  transform: translate(-50%, -50%); /* Centers it exactly */
+  background-color: #2c2c2c;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999; /* Ensures the popup stays above everything else */
+  width: 400px; /* Set a fixed width for the popup */
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/*write code to make popup look good*/
+
+.popup button {
+  padding: 10px 20px;
+  background-color: #1e90ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background-color: #007bff;
+}
+
+.popup input, .popup select {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.popup input[type="text"], .popup input[type="number"], .popup input[type="date"], .popup input[type="time"], .popup select {
+  width: 100%;
+}
+
+.popup button:focus {
+  outline: none;
 }
 

@@ -1,0 +1,70 @@
+/* AI Tasks styling */
+
+.ai-tasks-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  background: #1e1e2f;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.task-form input, .task-form select, .task-form button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+}
+
+.task-form input, .task-form select {
+  background: #292943;
+  color: white;
+}
+
+.task-form button {
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.task-list {
+  margin-top: 20px;
+}
+
+.task-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  padding: 10px;
+  background: #292943;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
+.schedule-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  font-size: 18px;
+  background: #28a745;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
